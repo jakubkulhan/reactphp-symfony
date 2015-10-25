@@ -1,0 +1,9 @@
+index:
+  path: /
+  defaults:
+    _controller: controller.index:indexAction
+
+promise:
+  path: /promise/{secs}
+  defaults:
+    _controller: controller.index:promiseAction

@@ -1,0 +1,22 @@
+{
+  "require": {
+    "php": ">=5.4",
+    "react/react": "~0.4",
+    "skrz/autowiring-bundle": "~1.1",
+    "symfony/config": "~2.7",
+    "symfony/console": "~2.7",
+    "symfony/dependency-injection": "~2.7",
+    "symfony/framework-bundle": "~2.7",
+    "symfony/http-foundation": "~2.7",
+    "symfony/http-kernel": "~2.7",
+    "symfony/routing": "~2.7",
+    "symfony/yaml": "~2.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": [
+        "src/App/"
+      ]
+    }
+  }
+}

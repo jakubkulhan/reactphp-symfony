@@ -1,0 +1,50 @@
+parameters: ~
+
+autowiring:
+  autoscan_psr4:
+    App: %kernel.root_dir%/src/App
+
+services:
+  # react
+  react.loop:
+    class: React\EventLoop\LoopInterface
+    synthetic: true
+
+  # base application services
+  kernel:
+    class: Symfony\Component\HttpKernel\Kernel
+    synthetic: true
+
+  service_container:
+    class: Symfony\Component\DependencyInjection\Container
+    synthetic: true
+
+  http_kernel:
+    class: Symfony\Component\HttpKernel\HttpKernel
+
+  event_dispatcher:
+    class: Symfony\Component\EventDispatcher\EventDispatcher
+    calls:
+      - [ addSubscriber, [ @router_listener ] ]
+      - [ addListener, [ kernel.view, [ App\PromiseResponse, wrapPromise ] ] ]
+
+  controller_resolver:
+    class: Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver
+
+  controller_name_parser:
+    class: Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser
+
+  router:
+    class: Symfony\Bundle\FrameworkBundle\Routing\Router
+    arguments: [ @service_container, %kernel.root_dir%/conf/routing.yml ]
+
+  router_listener:
+    class: Symfony\Component\HttpKernel\EventListener\RouterListener
+    arguments: [ @router, ~, ~, ~ ]
+
+  file_locator:
+    class: Symfony\Component\HttpKernel\Config\FileLocator
+    arguments: [ @kernel, %kernel.root_dir%/conf/hitserver ]
+
+  routing.loader:
+      class: Symfony\Component\Routing\Loader\YamlFileLoader
